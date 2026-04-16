@@ -1,0 +1,84 @@
+/*
+  Shared theme — dark & minimal
+  Applied across all envs via the docs-template.
+  To tweak per-env: override variables in a separate env-specific file
+  and import it after this one in astro.config.mjs customCss array.
+*/
+
+:root {
+  /* Accent colour — change this one variable to rebrand an env */
+  --sl-color-accent-low:    #1a2a3a;
+  --sl-color-accent:        #4a9eff;
+  --sl-color-accent-high:   #a8d4ff;
+
+  /* Typography */
+  --sl-font: 'Inter', system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Slightly tighter line height for docs */
+  --sl-line-height: 1.65;
+  --sl-line-height-headings: 1.2;
+}
+
+/* ── Dark mode overrides ── */
+:root[data-theme='dark'] {
+  --sl-color-bg:            #0d1117;
+  --sl-color-bg-nav:        #0d1117;
+  --sl-color-bg-sidebar:    #111318;
+  --sl-color-hairline:      #21262d;
+  --sl-color-text:          #c9d1d9;
+  --sl-color-text-accent:   #4a9eff;
+  --sl-color-white:         #f0f6fc;
+  --sl-color-gray-1:        #8b949e;
+  --sl-color-gray-2:        #6e7681;
+  --sl-color-gray-5:        #21262d;
+  --sl-color-gray-6:        #161b22;
+  --sl-color-gray-7:        #0d1117;
+}
+
+/* ── Light mode overrides ── */
+:root[data-theme='light'] {
+  --sl-color-bg:            #ffffff;
+  --sl-color-bg-sidebar:    #f6f8fa;
+  --sl-color-bg-nav:        #ffffff;
+  --sl-color-hairline:      #d0d7de;
+  --sl-color-text:          #24292f;
+}
+
+/* ── Sidebar refinements ── */
+.sidebar-content {
+  font-size: 0.875rem;
+}
+
+nav.sidebar a[aria-current='page'] {
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+/* ── Content area ── */
+.content-panel {
+  max-width: 820px;
+}
+
+/* ── Code blocks ── */
+.astro-code,
+pre.astro-code {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+/* ── Heading anchors ── */
+.heading-wrapper a.anchor {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.heading-wrapper:hover a.anchor {
+  opacity: 1;
+}
+
+/* ── Decap CMS admin link in footer (optional) ── */
+.site-footer a[href='/admin'] {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}

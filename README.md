@@ -1,4 +1,4 @@
-# docs-template
+# docs-boilerplate
 
 Template for spinning up a new isolated docs environment (Starlight + Cloudflare Pages + Decap CMS).
 
@@ -7,7 +7,7 @@ Template for spinning up a new isolated docs environment (Starlight + Cloudflare
 ### 1. Clone this repo
 
 ```bash
-git clone https://github.com/your-org/docs-template new-env-docs
+git clone https://github.com/your-org/docs-boilerplate new-env-docs
 cd new-env-docs
 ```
 
@@ -27,8 +27,9 @@ Files that contain `ENV_NAME`:
 - `public/admin/config.yml` — Decap CMS repo + site URL
 - `.github/workflows/deploy.yml` — Cloudflare Pages project name
 - `package.json` — package name
-- `src/content/dev/global/index.md` — welcome text
-- `src/content/team/global/index.md` — welcome text
+- `src/content/docs/dev/global/index.md` — welcome text
+- `src/content/docs/team/global/index.md` — welcome text
+- `src/content/docs/index.mdx` — homepage
 
 ### 3. Install dependencies
 
@@ -109,4 +110,3 @@ npm run preview   # preview production build locally
 
 Decap CMS admin is available at `localhost:4321/admin` in local dev
 (requires GitHub OAuth app for local auth — see Decap docs).
-# docs-boilerplate

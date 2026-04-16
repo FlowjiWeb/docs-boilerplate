@@ -1,0 +1,29 @@
+name: Sync docs to central docs repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'    # ← only triggers when docs files actually change
+                     #   prevents wasted Actions minutes on code-only pushes
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push docs to central docs repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.DOCS_REPO_TOKEN }}
+        with:
+          source-directory: docs
+          destination-github-username: your-org            # ← update
+          destination-repository-name: ENV_NAME-docs      # ← update (e.g. holmgren-docs)
+          target-directory: src/content/docs/dev/REPO_NAME  # ← update (e.g. dev/repo-a)
+          commit-message: 'sync: update REPO_NAME docs'   # ← update
+          destination-branch: main

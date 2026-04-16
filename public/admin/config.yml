@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────
+# Decap CMS config
+# Update repo: and site_url: when cloning this template
+# ─────────────────────────────────────────
+
+backend:
+  name: github
+  repo: your-org/ENV_NAME-docs     # ← update when cloning
+  branch: main
+
+site_url: https://docs.ENV_NAME.com  # ← update when cloning
+
+media_folder: public/images
+public_folder: /images
+
+# ─────────────────────────────────────────
+# Collections — one per team docs section
+# Add a new collection entry for each repo
+# ─────────────────────────────────────────
+
+collections:
+
+  - name: team-global
+    label: "Team docs — global"
+    folder: src/content/docs/team/global
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string }
+      - { label: Description, name: description, widget: string,   required: false }
+      - { label: Body,        name: body,        widget: markdown }
+
+  # ── Duplicate this block for each repo ──
+  # - name: team-repo-a
+  #   label: "Team docs — Repo A"
+  #   folder: src/content/docs/team/repo-a
+  #   create: true
+  #   slug: "{{slug}}"
+  #   fields:
+  #     - { label: Title,       name: title,       widget: string }
+  #     - { label: Description, name: description, widget: string,   required: false }
+  #     - { label: Body,        name: body,        widget: markdown }
