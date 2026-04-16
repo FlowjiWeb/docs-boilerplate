@@ -1,14 +1,30 @@
 ---
-title: Developer docs
+title: Intro
 description: Global developer documentation for ENV_NAME
 ---
 
-Welcome to the **ENV_NAME** developer docs.
+This is the central reference for **ENV_NAME** engineering. Start here if you're new, or jump directly to what you need.
 
-This section covers global architecture, setup guides, and cross-repo references.
-Repo-specific docs are synced automatically from each service repo.
+## 1. Understand the system
 
-## Getting started
+Before writing any code, read the architecture doc. It covers the full stack, how requests flow through the system, and where things live.
 
-- Set up your local environment → see [Setup guide](/dev/global/setup)
-- Understand the architecture → see [Architecture overview](/dev/global/architecture)
+→ [Architecture](/dev/global/architecture)
+
+## 2. Get running locally
+
+Step-by-step guide to cloning the repo, configuring your environment, and getting the site up on your machine.
+
+→ [Local setup](/dev/global/setup)
+
+## 3. Ship your work
+
+How staging and production deployments work, branch conventions, and how to roll back if something goes wrong.
+
+→ [Deployment](/dev/global/deployment)
+
+## 4. Keep it fast
+
+Caching strategy, what to avoid, and how to diagnose performance regressions.
+
+→ [Performance](/dev/global/performance)

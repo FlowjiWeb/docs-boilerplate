@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import pagePlugin from '@pelagornis/page';
 
 // ─────────────────────────────────────────
 // ENV CONFIG — update these when cloning
@@ -14,22 +15,22 @@ export default defineConfig({
   site: SITE_URL,
   integrations: [
     starlight({
+      plugins: [pagePlugin()],
+      components: {
+        TwoColumnContent: './src/overrides/TwoColumnContent.astro',
+        Header: './src/overrides/Header.astro',
+      },
       title: `${ENV_NAME} docs`,
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: false,
       },
       favicon: './public/favicon.svg',
-      defaultLocale: 'en',
+      defaultLocale: 'root',
       locales: {
-        en: { label: 'English' },
+        root: { label: 'English', lang: 'en' },
       },
       customCss: ['./src/styles/custom.css'],
-
-      // Edit this page button — points to the correct env repo
-      editLink: {
-        baseUrl: `https://github.com/${GITHUB_ORG}/${GITHUB_REPO}/edit/main/`,
-      },
 
       // Search (built-in Pagefind — no extra config needed)
       // Enabled by default in Starlight
@@ -47,6 +48,14 @@ export default defineConfig({
               label: 'Global',
               autogenerate: { directory: 'dev/global' },
             },
+            {
+              label: 'Website 1',
+              autogenerate: { directory: 'dev/website-1' },
+            },
+            {
+              label: 'Website 2',
+              autogenerate: { directory: 'dev/website-2' },
+            },
             // ── Add one block per repo synced into this env ──
             // {
             //   label: 'Repo A',
@@ -60,6 +69,14 @@ export default defineConfig({
             {
               label: 'Global',
               autogenerate: { directory: 'team/global' },
+            },
+            {
+              label: 'Website 1',
+              autogenerate: { directory: 'team/website-1' },
+            },
+            {
+              label: 'Website 2',
+              autogenerate: { directory: 'team/website-2' },
             },
             // ── Add one block per repo ──
             // {
