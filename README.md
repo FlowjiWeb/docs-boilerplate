@@ -49,20 +49,53 @@ git remote set-url origin https://github.com/your-org/holmgren-docs
 git push -u origin main
 ```
 
-### 6. Connect to Cloudflare Pages
+### 6. Commit the lock file
 
-1. Cloudflare dashboard → Pages → Create application
-2. Connect to GitHub → select `holmgren-docs`
-3. Build command: `npm run build`
-4. Output directory: `dist`
-5. Deploy
+The boilerplate gitignores `package-lock.json` but deployed projects need it for CI:
 
-### 7. Add secrets to GitHub repo
+```bash
+# Remove this line from .gitignore:
+# package-lock.json
+git add package-lock.json .gitignore
+git commit -m "Track package-lock.json for CI"
+git push
+```
 
-| Secret | Where to get it |
+### 7. Create Cloudflare Pages project
+
+**Do not** use the Git integration — deploy via GitHub Actions instead:
+
+1. Cloudflare dashboard → Workers & Pages → Create → **Pages** → **Direct Upload**
+2. Name it exactly `your-env-docs` (must match `wrangler.toml` and `deploy.yml`)
+3. Upload any placeholder file to complete creation
+
+### 8. Create a Cloudflare API token
+
+One token per Cloudflare account covers all projects in that account:
+
+1. Cloudflare → **My Profile → API Tokens → Create Token → Custom token**
+2. Name: `your-env-docs deploy`
+3. Permission: `Cloudflare Pages — Edit` (Account level) — nothing else
+4. Save and copy the token
+
+### 9. Add secrets to GitHub repo
+
+**Settings → Secrets and variables → Actions → New repository secret:**
+
+| Secret | Value |
 |---|---|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare → My Profile → API Tokens |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare → right sidebar on any page |
+| `CLOUDFLARE_API_TOKEN` | token from step 8 |
+| `CLOUDFLARE_ACCOUNT_ID` | visible in Cloudflare dashboard URL: `dash.cloudflare.com/ACCOUNT_ID/...` |
+
+### 10. Test the deploy
+
+GitHub → **Actions → Deploy to Cloudflare Pages → Run workflow**
+
+### 11. Custom domain (optional)
+
+1. Cloudflare Pages project → **Custom domains** → add `docs.yourproject.com`
+2. Copy the CNAME record Cloudflare shows you
+3. Add it at your DNS provider (`docs` → `your-env-docs.pages.dev`)
 
 ### 8. Set up Cloudflare Zero Trust (access control)
 

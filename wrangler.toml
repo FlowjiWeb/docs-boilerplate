@@ -1,0 +1,2 @@
+name = "ENV_NAME-docs"
+pages_build_output_dir = "dist"
