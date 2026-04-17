@@ -1,0 +1,39 @@
+---
+import Default from '@pelagornis/page/overrides/Header.astro';
+import { getCurrentSection } from './sidebar-utils';
+
+const { sidebar } = Astro.locals.starlightRoute;
+const section = getCurrentSection(sidebar);
+
+// Use first word of the section label, lowercased — e.g. "Developer docs" → "developer"
+const badge = section ? section.label.split(' ')[0].toLowerCase() : null;
+---
+
+<Default {...Astro.props} />
+
+{badge && <span class="sl-section-badge">{badge}</span>}
+
+{badge && (
+  <script is:inline>
+    var badge = document.querySelector('.sl-section-badge');
+    var title = document.querySelector('.page-site-title');
+    if (badge && title) title.insertAdjacentElement('afterend', badge);
+  </script>
+)}
+
+<style is:global>
+  .sl-section-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--page-accent-light);
+    color: var(--page-accent);
+    flex-shrink: 0;
+    align-self: center;
+    margin-left: 0;
+    transform: translateY(1px);
+  }
+</style>

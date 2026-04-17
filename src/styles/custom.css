@@ -1,84 +1,271 @@
-/*
-  Shared theme — dark & minimal
-  Applied across all envs via the docs-template.
-  To tweak per-env: override variables in a separate env-specific file
-  and import it after this one in astro.config.mjs customCss array.
-*/
+/* ── Layer order: bd comes after base and starlight.base, so our vars win ── */
+@layer base, starlight.base, bd;
 
-:root {
-  /* Accent colour — change this one variable to rebrand an env */
-  --sl-color-accent-low:    #1a2a3a;
-  --sl-color-accent:        #4a9eff;
-  --sl-color-accent-high:   #a8d4ff;
+@layer bd {
+    /* Dark mode */
+    html.bd[data-theme='dark'] {
+        --sl-color-accent-low: #1a2a3a;
+        --sl-color-accent: var(--config-accent-dark-mode);
+        --sl-color-accent-high: #a8d4ff;
+        --sl-color-bg: var(--config-bg-dark);
+        --sl-color-bg-nav: var(--config-bg-dark);
+        --sl-color-bg-sidebar: #131010;
+        --sl-color-hairline: #221d1d;
+        --sl-color-text: #f5f0eb;
+        --sl-color-text-accent: var(--config-accent-dark-mode);
+        --sl-color-white: #f5f0eb;
+        --sl-color-gray-1: #9e8f89;
+        --sl-color-gray-2: #7a6b65;
+        --sl-color-gray-5: #221d1d;
+        --sl-color-gray-6: #131010;
+        --sl-color-gray-7: #0f0d0d;
+        --page-bg: var(--config-bg-dark);
+        --page-bg-secondary: #131010;
+        --page-bg-tertiary: #161313;
+        --page-bg-elevated: #131010;
+        --page-text: #f5f0eb;
+        --page-text-dark: #f5f0eb;
+        --page-text-secondary: #c9b8b0;
+        --page-text-muted: #9e8f89;
+        --page-accent: var(--config-accent-light);
+        --page-accent-hover: var(--config-accent-dark);
+        --page-accent-light: rgba(212, 131, 106, 0.15);
+        --page-accent-bg: rgba(212, 131, 106, 0.1);
+        --page-border: #221d1d;
+        --page-border-light: #1a1717;
+        --page-border-strong: #2a2222;
+    }
 
-  /* Typography */
-  --sl-font: 'Inter', system-ui, sans-serif;
-  --sl-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    /* Light mode */
+    html.bd[data-theme='light'] {
+        --page-bg: var(--config-bg-light);
+        --page-bg-secondary: #c7a79226;
+        --page-bg-tertiary: #e8e2db;
+        --page-bg-elevated: #f8f4ef;
+        --page-text: #1a0808;
+        --page-text-secondary: #6b5f59;
+        --page-text-muted: #9e958f;
+        --page-text-disabled: #b8afa9;
+        --page-border: #d9d2c8;
+        --page-border-light: #e5dfd8;
+        --page-border-strong: #c5bcb2;
+        --page-accent: var(--config-accent-light);
+        --page-accent-hover: var(--config-accent-dark);
+        --page-accent-light: #c7a79226;
+        --page-accent-bg: #c7a79226;
+        --sl-color-accent-low: #c7a79226;
+        --sl-color-accent: var(--config-accent-light);
+        --sl-color-accent-high: var(--config-accent-dark);
+        --sl-color-bg: var(--config-bg-light);
+        --sl-color-bg-nav: rgba(245, 240, 235, 0.9);
+        --sl-color-bg-sidebar: #ede8e2;
+        --sl-color-hairline: #d9d2c8;
+        --sl-color-text: #1a0808;
+        --sl-color-text-accent: var(--config-accent-dark);
+        --sl-color-white: #1a0808;
+        --sl-color-gray-1: #7a6e68;
+        --sl-color-gray-2: #9e958f;
+        --sl-color-gray-5: #d9d2c8;
+        --sl-color-gray-6: #e8e2db;
+        --sl-color-gray-7: #f0ebe4;
+    }
 
-  /* Slightly tighter line height for docs */
-  --sl-line-height: 1.65;
-  --sl-line-height-headings: 1.2;
+    /* Section-specific accents */
+    html.bd[data-theme='light'][data-section='developer-docs'] {
+        --page-accent: var(--config-dev-accent-light);
+        --page-accent-hover: var(--config-dev-accent-light-hover);
+        --sl-color-accent: var(--config-dev-accent-light);
+        --sl-color-accent-high: var(--config-dev-accent-light-hover);
+        --sl-color-text-accent: var(--config-dev-accent-light-hover);
+    }
+
+    html.bd[data-theme='dark'][data-section='developer-docs'] {
+        --page-accent: var(--config-dev-accent-dark);
+        --page-accent-hover: var(--config-dev-accent-dark-hover);
+        --sl-color-accent: var(--config-dev-accent-dark);
+        --sl-color-accent-high: var(--config-dev-accent-dark-hover);
+        --sl-color-text-accent: #3da8b2;
+    }
 }
 
-/* ── Dark mode overrides ── */
-:root[data-theme='dark'] {
-  --sl-color-bg:            #0d1117;
-  --sl-color-bg-nav:        #0d1117;
-  --sl-color-bg-sidebar:    #111318;
-  --sl-color-hairline:      #21262d;
-  --sl-color-text:          #c9d1d9;
-  --sl-color-text-accent:   #4a9eff;
-  --sl-color-white:         #f0f6fc;
-  --sl-color-gray-1:        #8b949e;
-  --sl-color-gray-2:        #6e7681;
-  --sl-color-gray-5:        #21262d;
-  --sl-color-gray-6:        #161b22;
-  --sl-color-gray-7:        #0d1117;
+/* Background colours — unlayered, beat any layer */
+html.bd[data-theme='dark'],
+html.bd[data-theme='dark'] body {
+    background-color: var(--config-bg-dark) !important;
 }
 
-/* ── Light mode overrides ── */
-:root[data-theme='light'] {
-  --sl-color-bg:            #ffffff;
-  --sl-color-bg-sidebar:    #f6f8fa;
-  --sl-color-bg-nav:        #ffffff;
-  --sl-color-hairline:      #d0d7de;
-  --sl-color-text:          #24292f;
+html.bd[data-theme='light'],
+html.bd[data-theme='light'] body {
+    background-color: var(--config-bg-light) !important;
 }
 
-/* ── Sidebar refinements ── */
+/* ── Cursor ── */
+a,
+button,
+[role='button'],
+select,
+label[for],
+summary,
+a *,
+button *,
+[role='button'] * {
+    cursor: pointer;
+}
+
+/* ── Header ── */
+html.bd[data-theme='light'] .page-header {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 1px 0 rgba(44, 36, 32, 0.08) !important;
+}
+
+/* ── Header icons ── */
+html.bd[data-theme='light'] .page-header .page-theme-toggle-button,
+html.bd[data-theme='light'] .page-header .page-search-button,
+html.bd[data-theme='light'] .page-header a[rel='me'] {
+    background: transparent !important;
+    color: var(--page-text) !important;
+}
+
+/* ── Sidebar ── */
+html.bd[data-theme='light'] .sidebar-pane {
+    box-shadow: inset -1px 0 0 var(--sl-color-hairline);
+}
+
+html.bd[data-theme='light'] .page-sidebar-group-title {
+    color: var(--page-text);
+}
+
+/* ── Sidebar accordions ── */
+.page-sidebar-group-title {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-sidebar-group-title::after {
+    content: '';
+    flex-shrink: 0;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+    opacity: 0.4;
+    margin-left: 0.5rem;
+}
+
+.page-sidebar-group.sl-collapsed .page-sidebar-group-title::after {
+    transform: rotate(-45deg);
+}
+
+/* Height is driven by JS (scrollHeight), CSS provides the transition */
+.page-sidebar-group-links {
+    overflow: hidden !important;
+    transition:
+        height 0.25s ease,
+        opacity 0.2s ease;
+    opacity: 1;
+}
+
+.page-sidebar-group.sl-collapsed .page-sidebar-group-links {
+    opacity: 0;
+}
+
+/* Tighten spacing on collapsed groups */
+.page-sidebar-group {
+    transition: margin-bottom 0.25s ease;
+}
+
+.page-sidebar-group.sl-collapsed {
+    margin-bottom: 0;
+}
+
 .sidebar-content {
-  font-size: 0.875rem;
+    font-size: 0.875rem;
 }
 
-nav.sidebar a[aria-current='page'] {
-  font-weight: 600;
-  border-radius: 4px;
+.sidebar-content a[aria-current='page'] {
+    font-weight: 600;
+    border-radius: 4px;
 }
 
 /* ── Content area ── */
-.content-panel {
-  max-width: 820px;
+.main-frame .content-panel {
+    max-width: 820px;
 }
 
 /* ── Code blocks ── */
 .astro-code,
-pre.astro-code {
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 8px;
-  font-size: 0.85rem;
+pre.astro-code,
+pre {
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: var(--page-radius);
+    font-size: 0.85rem;
 }
 
 /* ── Heading anchors ── */
 .heading-wrapper a.anchor {
-  opacity: 0;
-  transition: opacity 0.15s;
+    opacity: 0;
+    transition: opacity 0.15s;
 }
 .heading-wrapper:hover a.anchor {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* ── Decap CMS admin link in footer (optional) ── */
 .site-footer a[href='/admin'] {
-  font-size: 0.75rem;
-  opacity: 0.5;
+    font-size: 0.75rem;
+    opacity: 0.5;
+}
+
+/* ── Homepage hero buttons ── */
+html.bd[data-theme='light'] .page-hero-actions .page-button-primary {
+    --blue-500: var(--config-dev-accent-dark);
+    --blue-600: var(--config-dev-accent-light);
+    --blue-700: var(--config-dev-accent-light-hover);
+}
+
+html.bd[data-theme='light'] .page-hero-actions .page-button-ghost {
+    --page-border: var(--config-accent-light);
+    --page-border-strong: var(--config-accent-dark);
+    --page-text: var(--config-accent-light);
+}
+
+html.bd[data-theme='dark'] .page-hero-actions .page-button-primary {
+    --blue-500: #7ab5bb;
+    --blue-600: #6aa5ab;
+    --blue-700: #5a9198;
+}
+
+html.bd[data-theme='dark'] .page-hero-actions .page-button-ghost {
+    --page-border: var(--config-accent-light);
+    --page-border-strong: var(--config-accent-dark);
+    --page-text: var(--config-accent-light);
+}
+
+/* ── Hero & footer container resets ── */
+.page-hero:where(.astro-c5jtyonv),
+.page-footer-container:where(.astro-jzwwda3o) {
+    background: none !important;
+}
+
+.page-footer-container .pagination-links {
+    font-size: 0.7em;
+}
+
+.page-footer-wrapper .page-footer-container .pagination-links .link-title {
+    font-size: 1.2rem !important;
+}
+
+.page-hero:where(.astro-c5jtyonv)::before {
+    content: none !important;
+}
+
+.page-header-container:where(.astro-etwbguiy) {
+    max-width: 100% !important;
 }

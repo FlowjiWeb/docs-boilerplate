@@ -1,26 +1,19 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import pagePlugin from '@pelagornis/page';
-
-// ─────────────────────────────────────────
-// ENV CONFIG — update these when cloning
-// ─────────────────────────────────────────
-const ENV_NAME = 'ENV_NAME';           // e.g. holmgren, flowji, happybees
-const GITHUB_ORG = 'your-org';
-const GITHUB_REPO = `${ENV_NAME}-docs`;
-const SITE_URL = `https://docs.${ENV_NAME}.com`;
-// ─────────────────────────────────────────
+import { siteConfig } from './src/site.config.ts';
 
 export default defineConfig({
-  site: SITE_URL,
+  site: siteConfig.siteUrl,
   integrations: [
     starlight({
       plugins: [pagePlugin()],
       components: {
+        Head: './src/overrides/Head.astro',
         TwoColumnContent: './src/overrides/TwoColumnContent.astro',
         Header: './src/overrides/Header.astro',
       },
-      title: `${ENV_NAME} docs`,
+      title: siteConfig.name,
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: false,
@@ -37,7 +30,7 @@ export default defineConfig({
 
       // Social links in header
       social: [
-        { icon: 'github', label: 'GitHub', href: `https://github.com/${GITHUB_ORG}/${GITHUB_REPO}` },
+        { icon: 'github', label: 'GitHub', href: `https://github.com/${siteConfig.githubOrg}/${siteConfig.githubRepo}` },
       ],
 
       sidebar: [

@@ -97,13 +97,34 @@ GitHub → **Actions → Deploy to Cloudflare Pages → Run workflow**
 2. Copy the CNAME record Cloudflare shows you
 3. Add it at your DNS provider (`docs` → `your-env-docs.pages.dev`)
 
-### 8. Set up Cloudflare Zero Trust (access control)
+### 12. Set up Decap CMS OAuth
+
+Decap CMS needs a GitHub OAuth app to handle editor login.
+
+1. **GitHub → Settings → Developer settings → OAuth Apps → New OAuth App**
+
+| Field | Value |
+|---|---|
+| Application name | `ENV_NAME Docs CMS` |
+| Homepage URL | `https://ENV_NAME-docs.pages.dev` |
+| Authorization callback URL | `https://ENV_NAME-docs.pages.dev/api/callback` |
+
+2. Add secrets to **Cloudflare Pages → Settings → Variables and secrets** (type: Secret, name typed manually — no copy-paste to avoid invisible characters):
+
+| Secret | Value |
+|---|---|
+| `GITHUB_CLIENT_ID` | Client ID from the OAuth app |
+| `GITHUB_CLIENT_SECRET` | Client Secret from the OAuth app |
+
+3. The OAuth proxy is already in `functions/api/` — no extra setup needed.
+
+### 13. Set up Cloudflare Zero Trust (access control)
 
 1. Cloudflare → Zero Trust → Access → Applications
 2. Add application → select the Pages project
 3. Policy: allow GitHub login, restrict to your team's GitHub accounts or org
 
-### 9. Add service repos
+### 14. Add service repos
 
 For each service repo that should sync dev docs into this env:
 

@@ -1,0 +1,116 @@
+---
+import Default from '@pelagornis/page/overrides/TwoColumnContent.astro';
+import { getCurrentSection } from './sidebar-utils';
+
+const { sidebar } = Astro.locals.starlightRoute;
+const section = getCurrentSection(sidebar);
+
+// Show only the current section's children; empty on homepage (no section active)
+Astro.locals.starlightRoute.sidebar = section ? section.entries : [];
+
+// Prevent footer pagination from crossing section boundaries
+if (section) {
+  function collectHrefs(entries: typeof section.entries): Set<string> {
+    const hrefs = new Set<string>();
+    for (const entry of entries) {
+      if (entry.type === 'link') hrefs.add(entry.href);
+      else if (entry.type === 'group') entry.entries.forEach(e => {
+        if (e.type === 'link') hrefs.add(e.href);
+      });
+    }
+    return hrefs;
+  }
+  const sectionHrefs = collectHrefs(section.entries);
+  const { pagination } = Astro.locals.starlightRoute;
+  if (pagination) {
+    Astro.locals.starlightRoute.pagination = {
+      prev: pagination.prev && sectionHrefs.has(pagination.prev.href) ? pagination.prev : undefined,
+      next: pagination.next && sectionHrefs.has(pagination.next.href) ? pagination.next : undefined,
+    };
+  }
+}
+
+// Slugify the section label so CSS can scope accent colours per section
+// e.g. "Developer docs" → "developer-docs", "Team docs" → "team-docs"
+const sectionKey = section?.label?.toLowerCase().replace(/\s+/g, '-') ?? '';
+---
+
+<script is:inline define:vars={{ sectionKey }}>
+  document.documentElement.setAttribute('data-section', sectionKey);
+</script>
+
+<script is:inline>
+(function () {
+  function collapse(links) {
+    links.style.height = links.scrollHeight + 'px';
+    links.offsetHeight; // force reflow
+    links.style.height = '0';
+    links.style.opacity = '0';
+  }
+
+  function expand(links) {
+    links.style.height = links.scrollHeight + 'px';
+    links.style.opacity = '1';
+    links.addEventListener('transitionend', function onEnd() {
+      links.style.height = '';
+      links.removeEventListener('transitionend', onEnd);
+    });
+  }
+
+  function initAccordions() {
+    document.querySelectorAll('.page-sidebar-group').forEach(function (group) {
+      var title = group.querySelector('.page-sidebar-group-title');
+      var links = group.querySelector('.page-sidebar-group-links');
+      if (!title || !links || title.dataset.accordion) return;
+      title.dataset.accordion = '1';
+
+      var hasActive = !!group.querySelector('[aria-current="page"]');
+      if (!hasActive) {
+        links.style.height = '0';
+        links.style.opacity = '0';
+        group.classList.add('sl-collapsed');
+      }
+
+      function toggle(open) {
+        // Close all siblings
+        group.closest('.page-sidebar').querySelectorAll('.page-sidebar-group').forEach(function (g) {
+          if (g === group) return;
+          var l = g.querySelector('.page-sidebar-group-links');
+          if (l && !g.classList.contains('sl-collapsed')) {
+            g.classList.add('sl-collapsed');
+            collapse(l);
+          }
+        });
+        if (open) {
+          group.classList.remove('sl-collapsed');
+          expand(links);
+        } else {
+          group.classList.add('sl-collapsed');
+          collapse(links);
+        }
+      }
+
+      title.addEventListener('click', function () {
+        toggle(group.classList.contains('sl-collapsed'));
+      });
+      title.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle(group.classList.contains('sl-collapsed'));
+        }
+      });
+    });
+  }
+
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', initAccordions)
+    : initAccordions();
+
+  document.addEventListener('astro:page-load', initAccordions);
+})();
+</script>
+
+<Default {...Astro.props}>
+  <slot name="right-sidebar" slot="right-sidebar" />
+  <slot />
+</Default>

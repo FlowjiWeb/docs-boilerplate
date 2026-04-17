@@ -5,10 +5,12 @@
 
 backend:
   name: github
-  repo: your-org/ENV_NAME-docs     # ← update when cloning
+  repo: your-org/ENV_NAME-docs        # ← update when cloning
   branch: main
+  base_url: https://ENV_NAME-docs.pages.dev   # ← update when cloning
+  auth_endpoint: /api/auth
 
-site_url: https://docs.ENV_NAME.com  # ← update when cloning
+site_url: https://ENV_NAME-docs.pages.dev     # ← update when cloning
 
 media_folder: public/images
 public_folder: /images

@@ -1,0 +1,23 @@
+---
+import Default from '@astrojs/starlight/components/Head.astro';
+import { siteConfig } from '../site.config.ts';
+
+const { brand, sections } = siteConfig;
+const dev = sections.developerDocs;
+
+const cssVars = [
+  `--config-accent-light: ${brand.accentLight}`,
+  `--config-accent-dark: ${brand.accentDark}`,
+  `--config-accent-dark-mode: ${brand.accentDarkMode}`,
+  `--config-bg-light: ${brand.bgLight}`,
+  `--config-bg-dark: ${brand.bgDark}`,
+  `--config-dev-accent-light: ${dev.accentLight}`,
+  `--config-dev-accent-light-hover: ${dev.accentLightHover}`,
+  `--config-dev-accent-dark: ${dev.accentDark}`,
+  `--config-dev-accent-dark-hover: ${dev.accentDarkHover}`,
+].join(';');
+---
+
+<Fragment set:html={`<style>:root{${cssVars}}</style>`} />
+<script is:inline>document.documentElement.classList.add('bd');</script>
+<Default {...Astro.props} />

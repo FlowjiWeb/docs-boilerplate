@@ -1,6 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" fill="none">
-  <!-- Replace this file with your actual logo -->
-  <rect width="32" height="32" rx="6" fill="#4a9eff" opacity="0.15"/>
-  <rect x="8" y="8" width="16" height="16" rx="3" fill="#4a9eff"/>
-  <text x="40" y="21" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="currentColor">ENV_NAME</text>
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#1A0A0A" fill-rule="evenodd" d="
+    M 44,0 
+    H 456 
+    A 44,44 0 0 1 500,44 
+    V 456 
+    A 44,44 0 0 1 456,500 
+    H 44 
+    A 44,44 0 0 1 0,456 
+    V 44 
+    A 44,44 0 0 1 44,0 
+    Z
+    M 478,66
+    A 30,30 0 0 0 448,36
+    H 52
+    A 30,30 0 0 0 22,66
+    V 130
+    A 30,30 0 0 0 52,160
+    H 448
+    A 30,30 0 0 0 478,130
+    V 66
+    Z
+    M 478,210
+    H 286
+    A 30,30 0 0 0 256,240
+    V 454
+    A 30,30 0 0 0 286,484
+    H 448
+    A 30,30 0 0 0 478,454
+    V 210
+    Z
+    M 80,370
+    A 30,30 0 0 0 50,400
+    V 450
+    A 30,30 0 0 0 80,480
+    A 30,30 0 0 0 110,450
+    V 400
+    A 30,30 0 0 0 80,370
+    Z
+    M 210,370
+    A 30,30 0 0 0 180,400
+    V 450
+    A 30,30 0 0 0 210,480
+    A 30,30 0 0 0 240,450
+    V 400
+    A 30,30 0 0 0 210,370
+    Z
+    M 370,178
+    A 30,30 0 0 0 340,208
+    V 450
+    A 30,30 0 0 0 370,480
+    A 30,30 0 0 0 400,450
+    V 208
+    A 30,30 0 0 0 370,178
+    Z
+  "/>
 </svg>

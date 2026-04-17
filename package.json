@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.38.3",
+    "@pelagornis/page": "^1.2.2",
     "astro": "^6.1.7",
     "sharp": "^0.32.5"
   }
